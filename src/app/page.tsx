@@ -1,7 +1,7 @@
 'use client'; // Important: Declare as a client component
 
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClient";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -13,13 +13,13 @@ export default function Home() {
       try {
         const { data, error } = await supabase.from("posts").select("*");
         if (error) {
-          console.error("Error fetching posts:", error);
+          console.error("Error fetching posts:", error.message, error.details);
           // Handle error appropriately (e.g., show an error message)
         } else {
           setPosts(data || []); // Ensure posts is an array, even if data is null
         }
       } catch (error) {
-        console.error("An unexpected error occurred:", error);
+        console.error("An unexpected error occurred:", error.message, error.details);
         // Handle unexpected errors
       } finally {
         setLoading(false); // Set loading to false after fetching (or error)
