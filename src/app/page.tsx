@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true); // Added loading state
 
   useEffect(() => {
@@ -14,10 +14,9 @@ export default function Home() {
         const { data, error } = await supabase.from("posts").select("*");
         if (error) {
           console.error("Error fetching posts:", error.message, error.details);
-          // Handle error appropriately (e.g., show an error message)
         } else {
-          setPosts(data || []); // Ensure posts is an array, even if data is null
-        }
+          setPosts(Array.isArray(data) ? data : []); // ✅ Ensures `data` is an array
+        }        
       } catch (error) {
         console.error("An unexpected error occurred:", error.message, error.details);
         // Handle unexpected errors
