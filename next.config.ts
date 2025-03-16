@@ -5,11 +5,7 @@ const nextConfig: NextConfig = {
     config.experiments = { ...config.experiments, topLevelAwait: true };
     return config;
   },
-  experimental: {
-    turbo: true, 
-    legacyBrowsers: false,
-    modern: true,
-  },
+  experimental: {},
 };
 
 export default nextConfig;
